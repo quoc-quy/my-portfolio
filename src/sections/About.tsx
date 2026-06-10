@@ -1,25 +1,181 @@
 'use client'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { fadeUp, stagger, fadeRight } from '@/lib/animations'
 import { MotionDiv, MotionH2, MotionP } from '@/components/Motion'
-import { Quote, GraduationCap } from 'lucide-react'
+import { Quote, GraduationCap, Play, RefreshCw, Terminal as TerminalIcon } from 'lucide-react'
+
+// Custom mini TS logo icon
+function TsIcon() {
+  return (
+    <span className="bg-[#3178c6] text-white text-[10px] font-black px-1.5 py-0.5 rounded mr-2 select-none">
+      TS
+    </span>
+  )
+}
 
 export default function About({ data }: { data: any }) {
+  const [isRunning, setIsRunning] = useState(false)
+  const [consoleLogs, setConsoleLogs] = useState<string[]>([])
+
+  const runCode = () => {
+    if (isRunning) return
+    setIsRunning(true)
+    setConsoleLogs([])
+
+    const logs = [
+      'Compiling aboutMe.ts...',
+      'Running developer.code()...',
+      '⚡ Online: 127.0.0.1:3000',
+      '🚀 "Hello, I\'m Trần Nguyễn Quốc Quý!"'
+    ]
+
+    logs.forEach((log, index) => {
+      setTimeout(() => {
+        setConsoleLogs(prev => [...prev, log])
+        if (index === logs.length - 1) {
+          setIsRunning(false)
+        }
+      }, (index + 1) * 500)
+    })
+  }
+
+  // Automatically simulate running on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      runCode()
+    }, 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <section id="about" className="py-24 px-6 bg-secondary/30 relative overflow-hidden">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        {/* Left column: Interactive Code Editor mockup */}
         <MotionDiv
           variants={fadeRight}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-100px' }}
-          className="relative flex justify-center"
+          className="relative flex justify-center w-full"
         >
-          <Quote className="absolute -top-6 left-0 w-20 h-20 text-primary/20 -rotate-12" />
-          <div className="w-72 h-72 md:w-96 md:h-96 rounded-[3rem] bg-gradient-to-tr from-blue-500/20 to-purple-500/20 border-2 border-primary/20 shadow-xl flex items-center justify-center rotate-3 hover:rotate-0 transition-transform duration-500 overflow-hidden">
-            <span className="text-primary/50 font-bold text-xl">Insert your Image Here</span>
+          <Quote className="absolute -top-6 left-0 w-20 h-20 text-primary/10 -rotate-12 pointer-events-none" />
+          
+          <div className="w-full max-w-md h-[440px] rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl overflow-hidden flex flex-col relative group">
+            {/* Header tab bar */}
+            <div className="h-11 bg-slate-950/80 border-b border-slate-800/80 flex items-center justify-between px-4 flex-shrink-0 select-none">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+              </div>
+              
+              <div className="flex items-center bg-slate-900 border-x border-t border-slate-800/60 px-4 py-1.5 rounded-t-lg text-xs font-semibold text-slate-400">
+                <TsIcon />
+                developer.ts
+              </div>
+
+              {/* Action trigger button */}
+              <button
+                onClick={runCode}
+                disabled={isRunning}
+                className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground text-xs font-bold rounded-lg transition-all duration-300 disabled:opacity-50 cursor-pointer shadow-sm"
+              >
+                {isRunning ? (
+                  <>
+                    <RefreshCw className="w-3 h-3 animate-spin" />
+                    <span>Running</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-3 h-3 fill-current" />
+                    <span>Run</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Code lines container */}
+            <div className="flex-grow flex p-5 font-mono text-[13px] overflow-hidden text-left leading-relaxed">
+              {/* Line numbers column */}
+              <div className="text-slate-600 pr-4 text-right select-none space-y-1">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+              </div>
+
+              {/* Colorful code tags */}
+              <div className="text-slate-300 space-y-1 select-text flex-grow">
+                <div>
+                  <span className="text-pink-500">const</span>{' '}
+                  <span className="text-cyan-400">developer</span> = {'{'}
+                </div>
+                <div className="pl-4">
+                  <span className="text-purple-400">name</span>: <span className="text-amber-300">'Quoc Quy'</span>,
+                </div>
+                <div className="pl-4">
+                  <span className="text-purple-400">role</span>: <span className="text-amber-300">'Web Developer'</span>,
+                </div>
+                <div className="pl-4">
+                  <span className="text-purple-400">passion</span>: <span className="text-amber-300">'UI/UX & Performance'</span>
+                </div>
+                <div>{'}'};</div>
+                
+                <div className="h-3"></div>
+                
+                <div className="text-slate-500">{'// Ready for new challenges'}</div>
+                <div>
+                  <span className="text-cyan-400">developer</span>.
+                  <span className="text-emerald-400 font-bold">code</span>();
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ repeat: Infinity, duration: 1 }}
+                    className="inline-block w-1.5 h-4 ml-0.5 bg-primary align-middle"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Console output display */}
+            <div className={`absolute bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800/80 transition-all duration-500 overflow-hidden ${
+              consoleLogs.length > 0 ? 'h-[140px]' : 'h-0'
+            }`}>
+              <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800/50 text-[11px] font-bold text-slate-500 select-none">
+                <div className="flex items-center gap-1.5">
+                  <TerminalIcon className="w-3.5 h-3.5 text-primary animate-pulse" />
+                  <span>TERMINAL CONSOLE</span>
+                </div>
+                <button
+                  onClick={() => setConsoleLogs([])}
+                  className="hover:text-foreground transition-colors cursor-pointer"
+                >
+                  Clear
+                </button>
+              </div>
+              <div className="p-4 font-mono text-[12px] text-left space-y-0.5 overflow-hidden h-[96px]">
+                {consoleLogs.map((log, idx) => {
+                  const isSuccess = log.includes('Success') || log.includes('Online') || log.includes('Hello') || log.includes('Trần')
+                  const colorClass = isSuccess ? 'text-emerald-400 font-semibold' : 'text-slate-400'
+                  return (
+                    <div key={idx} className={colorClass}>
+                      <span className="text-slate-600 select-none mr-2">$</span>
+                      {log}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </MotionDiv>
 
+        {/* Right column: About textual info */}
         <MotionDiv
           variants={stagger}
           initial="hidden"

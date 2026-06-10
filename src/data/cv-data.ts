@@ -1,38 +1,65 @@
 export const cvData = {
   personal: {
     name: 'Tran Nguyen Quoc Quy',
-    role: 'Frontend Developer',
+    role: 'Web Developer Intern',
     email: 'quocquytnqq@gmail.com',
     github: 'https://github.com/quoc-quy',
     linkedin: 'https://linkedin.com'
   },
   skills: {
     frontend: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'ReactJS', 'Next.js'],
-    styling: ['Tailwind CSS', 'Shadcn/UI', 'Framer Motion', 'Lucide Icons'],
-    tools: ['Socket.io', 'Git/GitHub', 'Zustand', 'Zod', 'React Hook Form', 'AWS', 'Figma']
+    styling: ['Tailwind CSS', 'Shadcn/UI', 'Socket.io', 'Lucide Icons'],
+    tools: [
+      'Node.js',
+      'Express',
+      'Git/GitHub',
+      'Zustand',
+      'Axios',
+      'MongoDB',
+      'PostgreSQL',
+      'Figma',
+      'Postman'
+    ]
   },
   projects: [
+    {
+      id: 'chatpulse',
+      title: 'ChatPulse Real-Time Chat',
+      descEn:
+        'Real-time chat and video calling application with Socket.io, LiveKit integration, Amazon S3 file storage, and a RAG-based AI assistant for Vietnamese traffic regulations.',
+      descVi:
+        'Ứng dụng chat và gọi video thời gian thực với Socket.io, tích hợp LiveKit, lưu trữ file Amazon S3 và trợ lý AI tra cứu luật giao thông Việt Nam theo mô hình RAG.',
+      stack: [
+        'React',
+        'TypeScript',
+        'Tailwind CSS',
+        'Zustand',
+        'Socket.io',
+        'LiveKit',
+        'Express',
+        'MongoDB'
+      ],
+      github: 'https://github.com/quoc-quy/ChatPulse.git',
+      demo: 'https://chatpulse-frontend.vercel.app/'
+    },
     {
       id: 'tripbee',
       title: 'TripBee Travel Booking',
       descEn:
-        'Multi-step booking engine with client-side state persistence, advanced search/filtering, and performance optimizations.',
+        'Multi-step travel booking platform with real-time availability updates, secure payment workflows, tour cancellation handling, and automated CI/CD pipelines via GitHub Actions.',
       descVi:
-        'Hệ thống đặt phòng đa bước với lưu trữ state phía client, tìm kiếm/lọc nâng cao và tối ưu hóa hiệu suất hiển thị.',
-      stack: ['React', 'TypeScript', 'Tailwind CSS', 'Context API', 'Axios'],
+        'Nền tảng đặt tour du lịch đa bước với cập nhật chỗ trống thời gian thực, quy trình thanh toán an toàn, xử lý hủy tour và tự động hóa CI/CD qua GitHub Actions.',
+      stack: [
+        'React',
+        'TypeScript',
+        'Tailwind CSS',
+        'Zustand',
+        'Lucide React',
+        'Java',
+        'PostgreSQL'
+      ],
       github: 'https://github.com/quoc-quy/TripBee.git',
-      demo: '#'
-    },
-    {
-      id: 'pingme',
-      title: 'PingMe Real-Time Chat',
-      descEn:
-        'Responsive real-time chat UI with scalable global state, robust form validation, and modularized logic.',
-      descVi:
-        'Nền tảng chat thời gian thực với UI responsive, quản lý state toàn cục mở rộng tốt, và validation form chặt chẽ.',
-      stack: ['React', 'TypeScript', 'Zustand', 'Socket.io', 'React Hook Form'],
-      github: 'https://github.com/quoc-quy/PingMe.git',
-      demo: '#'
+      demo: 'https://tripbeefrontend.vercel.app/'
     }
   ]
 }

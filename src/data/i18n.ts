@@ -11,15 +11,15 @@ export const dict = {
     about: {
       title: 'About Me',
       description1:
-        'Motivated Frontend Developer Intern with hands-on experience building production-grade React applications using TypeScript, Tailwind CSS, and modern state management.',
+        'Final-year Software Engineering student with hands-on experience building production-grade web applications using React, Next.js, TypeScript, and Node.js.',
       description2:
-        'Passionate about scalable UI architecture and real-time features. Eager to contribute and grow within a collaborative engineering team.'
+        'Passionate about crafting scalable web architectures and real-time features. Eager to contribute and grow within a collaborative engineering team.'
     },
     skills: {
       title: 'My Skills',
       frontend: 'Frontend',
       styling: 'Styling & UI',
-      tools: 'Real-time & Tools'
+      tools: 'Backend & Tools'
     },
     projects: {
       title: 'Featured Projects',
@@ -44,15 +44,15 @@ export const dict = {
     about: {
       title: 'Về Mình',
       description1:
-        'Là một Thực tập sinh Frontend đầy nhiệt huyết với kinh nghiệm thực tế xây dựng các ứng dụng React chuẩn production sử dụng TypeScript, Tailwind CSS và các giải pháp quản lý state hiện đại.',
+        'Sinh viên năm cuối chuyên ngành Kỹ thuật Phần mềm với kinh nghiệm thực tế xây dựng các ứng dụng web chuẩn production sử dụng React, Next.js, TypeScript và Node.js.',
       description2:
-        'Đam mê kiến trúc UI mở rộng và các tính năng thời gian thực (real-time). Mong muốn được đóng góp và phát triển trong một đội ngũ kỹ sư môi trường làm việc cộng tác.'
+        'Đam mê xây dựng kiến trúc web có khả năng mở rộng và các tính năng thời gian thực. Mong muốn được đóng góp và phát triển trong môi trường làm việc nhóm năng động.'
     },
     skills: {
       title: 'Kỹ Năng',
       frontend: 'Frontend',
       styling: 'Styling & UI',
-      tools: 'Real-time & Công Cụ Khác'
+      tools: 'Backend & Công Cụ'
     },
     projects: {
       title: 'Dự Án Nổi Bật',

@@ -1,6 +1,7 @@
 import { fadeUp, stagger, zoomIn, floatContinuous } from '@/lib/animations'
 import { MotionDiv, MotionH1, MotionP } from '@/components/Motion'
-import { Code2, MonitorPlay, Rocket, Database, ChevronRight } from 'lucide-react'
+import { Code2, MonitorPlay, Rocket, Database, ChevronRight, Download } from 'lucide-react'
+import Image from 'next/image'
 
 const dataSatellites = [
   {
@@ -76,10 +77,11 @@ export default function Hero({ data }: { data: any }) {
           </MotionP>
           <MotionDiv variants={fadeUp} className="flex flex-wrap gap-4">
             <a
-              href="#projects"
+              href="/Tran-Nguyen-Quoc-Quy.pdf"
+              download
               className="bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:-translate-y-1 hover:shadow-lg transition-all flex items-center gap-2"
             >
-              {data.cta1} <ChevronRight size={20} />
+              {data.cta1} <Download size={20} />
             </a>
             <a
               href="#contact"
@@ -113,35 +115,14 @@ export default function Hero({ data }: { data: any }) {
             animate="show"
             className="relative w-full h-full z-10 flex items-center justify-center"
           >
-            {/* Sử dụng một khối thiết kế code thay vì hình ảnh tĩnh */}
-            <div className="w-full h-full rounded-3xl bg-gradient-to-tr from-gray-900 to-gray-800 border border-gray-700 shadow-2xl overflow-hidden flex flex-col relative group">
-              <div className="h-10 bg-gray-950 flex items-center px-4 gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <div className="p-6 font-mono text-sm text-green-400 opacity-80 group-hover:opacity-100 transition-opacity">
-                <p>
-                  <span className="text-blue-400">const</span>{' '}
-                  <span className="text-yellow-200">developer</span> = {'{'}
-                </p>
-                <p className="ml-4">
-                  name: <span className="text-orange-300">Quoc Quy</span>,
-                </p>
-                <p className="ml-4">
-                  role: <span className="text-orange-300">Frontend Intern</span>,
-                </p>
-                <p className="ml-4">
-                  passion: <span className="text-orange-300">UI/UX & Performance</span>
-                </p>
-                <p>{'}'};</p>
-                <br />
-                <p className="text-gray-500">{'// Ready for new challenges'}</p>
-                <p>
-                  <span className="text-blue-400">developer</span>.
-                  <span className="text-yellow-200">code</span>();
-                </p>
-              </div>
+            <div className="w-full h-full aspect-square rounded-[3rem] bg-card border border-border shadow-2xl relative rotate-3 hover:rotate-0 transition-all duration-500 overflow-hidden">
+              <Image
+                src="/avatar.png"
+                alt="Trần Nguyễn Quốc Quý"
+                fill
+                className="object-cover"
+                unoptimized
+              />
             </div>
           </MotionDiv>
         </div>
