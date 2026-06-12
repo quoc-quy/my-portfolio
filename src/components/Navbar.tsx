@@ -51,7 +51,7 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
       className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 bg-background/80 backdrop-blur-md px-3 md:px-4 py-2 rounded-full border border-border shadow-md flex items-center justify-between gap-2 transition-all w-[92vw] md:w-auto"
     >
       <button
-        className="md:hidden p-2 text-foreground hover:bg-muted rounded-full transition-colors"
+        className="md:hidden p-2 text-foreground hover:bg-muted rounded-full transition-colors cursor-pointer"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -81,7 +81,7 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
         <div className="relative">
           <button
             onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-muted text-sm font-bold transition-colors"
+            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-muted text-sm font-bold transition-colors cursor-pointer"
           >
             <Globe className="w-4 h-4" />
             <span className="hidden sm:inline">{lang.toUpperCase()}</span>
@@ -116,7 +116,7 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
 
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="p-2 rounded-full hover:bg-muted transition-colors text-foreground"
+          className="p-2 rounded-full hover:bg-muted transition-colors text-foreground cursor-pointer"
         >
           {theme === 'dark' ? (
             <Sun className="w-4 h-4 text-yellow-400" />

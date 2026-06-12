@@ -10,19 +10,23 @@ export const portfolioData = {
       role: 'Web Developer Intern',
       name1: 'Trần Nguyễn',
       name2: 'Quốc Quý',
-      hook: 'Xây dựng ứng dụng web hiện đại, giao diện mượt mà và tính năng thời gian thực.',
+      hook: 'Xây dựng ứng dụng web hiện đại với giao diện trực quan, hiệu năng tốt và trải nghiệm người dùng mượt mà.',
       summary:
-        'Sinh viên năm cuối Kỹ thuật Phần mềm với kinh nghiệm thực tế xây dựng ứng dụng web React/Next.js chuẩn production. Đam mê phát triển web toàn diện và sẵn sàng đóng góp cho các sản phẩm có tác động thực tế.',
+        'Xây dựng các ứng dụng web với React, Next.js và Node.js, đồng thời quan tâm đến hiệu năng, trải nghiệm người dùng và chất lượng sản phẩm. Có kinh nghiệm xây dựng hệ thống thời gian thực, tích hợp AI và triển khai ứng dụng trong môi trường thực tế.',
       cta1: 'Tải xuống CV',
       cta2: 'Liên Hệ Ngay',
-      viewCV: 'Xem CV'
+      viewCV: 'Xem CV',
+      github: 'https://github.com/quoc-quy',
+      linkedin: 'https://linkedin.com'
     },
     about: {
       title: 'Về Mình',
       description:
-        'Mình là sinh viên năm cuối chuyên ngành Kỹ thuật Phần mềm tại Đại học Công nghiệp TP.HCM. Mình bị thu hút bởi việc biến logic phức tạp thành những giao diện người dùng đơn giản, tinh tế và dễ sử dụng.',
+        'Mình là sinh viên năm cuối ngành Kỹ thuật Phần mềm tại Đại học Công nghiệp TP.HCM. Mình thích phát triển giao diện web và quan tâm đến cách người dùng tương tác với sản phẩm, từ đó tạo ra những trải nghiệm trực quan và dễ sử dụng.',
       professionalSummary:
-        'Mục tiêu: Trở thành một Web Developer toàn diện, sẵn sàng đóng góp vào các sản phẩm thực tế trong môi trường Agile.',
+        'Mục tiêu: Trở thành một Web Developer toàn diện, sẵn sàng đóng góp vào các sản phẩm thực tế và tạo ra giá trị cho người dùng.',
+      educationTitle: 'Học Vấn',
+      greeting: 'Xin chào, mình là Trần Nguyễn Quốc Quý!',
       education: [
         {
           time: '09/2022 - Dự kiến 12/2026',
@@ -41,7 +45,10 @@ export const portfolioData = {
         },
         { name: 'Backend & APIs', desc: 'Node.js, Express, RESTful APIs, WebSocket (Socket.io)' },
         { name: 'Quản Lý State & Dữ Liệu', desc: 'Zustand, Axios, MongoDB, PostgreSQL' },
-        { name: 'Nền Tảng Cloud & Infrastructure', desc: 'AWS S3, Vercel, Railway, GitHub Actions, LiveKit Server' }
+        {
+          name: 'Nền Tảng Cloud & Infrastructure',
+          desc: 'AWS S3, Vercel, Railway, GitHub Actions, LiveKit Server'
+        }
       ],
       softSkillsTitle: 'Kỹ Năng Mềm',
       softSkills: [
@@ -212,24 +219,28 @@ export const portfolioData = {
       role: 'Web Developer Intern',
       name1: 'Tran Nguyen',
       name2: 'Quoc Quy',
-      hook: 'Building modern web applications with seamless UI and real-time features.',
+      hook: 'Building modern web applications with intuitive interfaces, strong performance, and seamless user experiences.',
       summary:
-        'Final-year Software Engineering student with hands-on experience building production-grade React/Next.js web applications. Passionate about full-stack web development and ready to contribute to impactful products.',
+        'Building web applications with React, Next.js, and Node.js while focusing on performance, user experience, and product quality. Experienced in developing real-time systems, integrating AI features, and deploying applications in production environments.',
       cta1: 'Download CV',
       cta2: 'Get In Touch',
-      viewCV: 'View CV'
+      viewCV: 'View CV',
+      github: 'https://github.com/quoc-quy',
+      linkedin: 'https://linkedin.com'
     },
     about: {
       title: 'About Me',
       description:
-        'I am a final-year Software Engineering student at Industrial University of Ho Chi Minh City. I am fascinated by how to transform complex logic into simple, elegant, and frictionless user interfaces.',
+        'I am a final-year Software Engineering student at the Industrial University of Ho Chi Minh City. I have a strong passion for frontend development and care deeply about how users interact with products, aiming to create intuitive and user-friendly digital experiences.',
       professionalSummary:
-        'Goal: To become a well-rounded Web Developer, ready to contribute to real-world products in an Agile environment.',
+        'Goal: To become a well-rounded Web Developer, ready to contribute to real-world products and deliver meaningful value to users.',
+      educationTitle: 'Education',
+      greeting: "Hello, I'm Tran Nguyen Quoc Quy!",
       education: [
         {
           time: '09/2022 - Expected 12/2026',
           title: 'Software Engineering',
-          desc: 'Industrial University of HCM City (IUH)'
+          desc: 'Industrial University of Ho Chi Minh City (IUH)'
         }
       ]
     },
@@ -243,7 +254,10 @@ export const portfolioData = {
         },
         { name: 'Backend & APIs', desc: 'Node.js, Express, RESTful APIs, WebSocket (Socket.io)' },
         { name: 'State & Data Management', desc: 'Zustand, Axios, MongoDB, PostgreSQL' },
-        { name: 'Cloud & Infrastructure', desc: 'AWS S3, Vercel, Railway, GitHub Actions, LiveKit Server' }
+        {
+          name: 'Cloud & Infrastructure',
+          desc: 'AWS S3, Vercel, Railway, GitHub Actions, LiveKit Server'
+        }
       ],
       softSkillsTitle: 'Soft Skills',
       softSkills: [
@@ -251,14 +265,14 @@ export const portfolioData = {
         'Team Collaboration (Team Lead)',
         'Problem Solving',
         'UI/UX Thinking',
-        'Self-directed Learning'
+        'Research & Self-learning'
       ],
       toolsTitle: 'Tools & Workflows',
       tools: ['Git', 'GitHub', 'Figma', 'Postman', 'Antigravity', 'Jira']
     },
     projects: {
       title: 'Featured Projects',
-      viewGithub: 'GitHub',
+      viewGithub: 'Source Code',
       viewDemo: 'Live Demo',
       categories: {
         all: 'All',
@@ -269,8 +283,8 @@ export const portfolioData = {
       },
       items: [
         {
-          title: 'ChatPulse Real-Time Chat',
-          desc: 'Real-time private and group chat with low-latency video calling via Socket.io and LiveKit. Features secure file storage on Amazon S3 and a RAG-based AI assistant for Vietnamese traffic regulations.',
+          title: 'ChatPulse - Real-Time Chat',
+          desc: 'A private and group chat application featuring low-latency video calling powered by Socket.io and LiveKit. Integrates secure file storage via Amazon S3 and implements a RAG-based AI assistant for querying Vietnamese traffic regulations.',
           stack: [
             'React',
             'TypeScript',
@@ -287,8 +301,8 @@ export const portfolioData = {
           category: 'main'
         },
         {
-          title: 'TripBee Travel Booking',
-          desc: 'Multi-step travel booking platform with real-time availability updates, secure payment and cancellation workflows, automated CI/CD pipelines via GitHub Actions, and deployment on Vercel and Railway.',
+          title: 'TripBee - Travel Booking Platform',
+          desc: 'A multi-step travel booking platform with real-time slot updates, secure payment and cancellation workflows, automated CI/CD pipelines via GitHub Actions, and production deployment on Vercel and Railway.',
           stack: [
             'React',
             'TypeScript',
@@ -305,7 +319,7 @@ export const portfolioData = {
         },
         {
           title: 'Tea-Station Store',
-          desc: 'Practiced responsive layout development with Tailwind CSS. Built a modern herbal tea e-commerce landing page with optimized asset loading and smooth hover animations.',
+          desc: 'A responsive herbal tea e-commerce landing page designed to practice Tailwind CSS styling, optimize page loading performance, and implement smooth micro-interactions.',
           stack: ['HTML', 'CSS', 'Tailwind CSS', 'JavaScript'],
           github: 'https://github.com/quoc-quy/tea-station.git',
           demo: 'https://quoc-quy.github.io/tea-station/',
@@ -314,7 +328,7 @@ export const portfolioData = {
         },
         {
           title: 'Uppo-Modal Library',
-          desc: 'Built a lightweight, customizable modal/dialog component using vanilla JavaScript to master core DOM APIs and create a zero-dependency, framework-independent web component.',
+          desc: 'A lightweight, framework-independent modal library developed using vanilla JavaScript to master DOM manipulation APIs and component architecture.',
           stack: ['HTML', 'CSS', 'JavaScript'],
           github: 'https://github.com/quoc-quy/Uppo-Modal.git',
           demo: 'https://quoc-quy.github.io/Uppo-Modal/',
@@ -323,7 +337,7 @@ export const portfolioData = {
         },
         {
           title: 'Tabex Tab Library',
-          desc: 'Developed a framework-independent tab switcher library. Practiced modular JavaScript component design, event delegation, and smooth visual state transitions.',
+          desc: 'A modular tab management library built with vanilla JavaScript, focusing on event delegation, DOM performance, and smooth transitions between UI tab panels.',
           stack: ['HTML', 'CSS', 'JavaScript'],
           github: 'https://github.com/quoc-quy/Tabex.git',
           demo: 'https://quoc-quy.github.io/Tabex/',
@@ -332,7 +346,7 @@ export const portfolioData = {
         },
         {
           title: 'Todo-List App',
-          desc: 'Built a task management app to solidify core CRUD operations, data lifecycle management, and persistent offline storage via localStorage.',
+          desc: 'A clean task manager application designed to master fundamental CRUD operations, local state management, and offline synchronization using localStorage.',
           stack: ['HTML', 'CSS', 'JavaScript'],
           github: 'https://github.com/quoc-quy/Todo-List.git',
           demo: 'https://quoc-quy.github.io/Todo-List/',
@@ -341,7 +355,7 @@ export const portfolioData = {
         },
         {
           title: 'Web Layout Mockup',
-          desc: 'Practiced building a pixel-perfect service landing page using semantic HTML5 elements and clean, well-structured CSS3.',
+          desc: 'A pixel-perfect service-showcase web interface crafted to practice semantic HTML5 layout structures and well-organized, maintainable CSS3 styling.',
           stack: ['HTML', 'CSS'],
           github: 'https://github.com/quoc-quy/f8-project-02.git',
           demo: 'https://quoc-quy.github.io/f8-project-02/',
@@ -350,7 +364,7 @@ export const portfolioData = {
         },
         {
           title: 'Studio Landing Page',
-          desc: 'Practiced designing a creative studio landing page with transition animations, hover effects, and a fully responsive layout across multiple viewports.',
+          desc: 'A creative studio landing page featuring smooth hover transitions and layouts optimized for cross-browser compatibility and responsiveness.',
           stack: ['HTML', 'CSS'],
           github: 'https://github.com/quoc-quy/f8-project-03.git',
           demo: 'https://quoc-quy.github.io/f8-project-03/',
@@ -359,7 +373,7 @@ export const portfolioData = {
         },
         {
           title: 'SaaS Platform Landing',
-          desc: 'Practiced wireframing a SaaS product landing page. Gained hands-on experience with Flexbox and CSS Grid for handling complex responsive layouts.',
+          desc: 'A SaaS product landing page template focusing on advanced responsive layouts using Flexbox and CSS Grid to handle complex viewport resizing smoothly.',
           stack: ['HTML', 'CSS'],
           github: 'https://github.com/quoc-quy/f8-project-04.git',
           demo: 'https://quoc-quy.github.io/f8-project-04/',
@@ -368,7 +382,7 @@ export const portfolioData = {
         },
         {
           title: 'Custom Web Design',
-          desc: 'Built a custom landing page, practicing structured CSS organization using BEM conventions for long-term maintainability and scalability.',
+          desc: 'An independent landing page layout built with CSS organized under the BEM methodology for easier modular scaling and long-term maintenance.',
           stack: ['HTML', 'CSS'],
           github: 'https://github.com/quoc-quy/f8-project-doc-lap-1.git',
           demo: 'https://quoc-quy.github.io/f8-project-doc-lap-1/',
@@ -377,7 +391,7 @@ export const portfolioData = {
         },
         {
           title: 'Digital Agency Layout',
-          desc: 'Practiced modern digital agency web design. Applied glassmorphism effects, vibrant gradients, and stylesheet optimizations to reduce initial load weight.',
+          desc: 'A modern digital agency web layout incorporating glassmorphism designs, vibrant gradients, and optimized CSS file sizes for fast load times.',
           stack: ['HTML', 'CSS'],
           github: 'https://github.com/quoc-quy/f8-project-doc-lap-2.git',
           demo: 'https://quoc-quy.github.io/f8-project-doc-lap-2/',
@@ -386,7 +400,7 @@ export const portfolioData = {
         },
         {
           title: 'Corporate Web Portal',
-          desc: 'Practiced building complex corporate layouts with responsive sidebar navigation, dashboard-style information grids, and interactive hover transitions.',
+          desc: 'A complex corporate web layout containing a responsive sidebar, a dashboard grid structure, and interactive hover feedback animations.',
           stack: ['HTML', 'CSS'],
           github: 'https://github.com/quoc-quy/f8-project-05.git',
           demo: 'https://quoc-quy.github.io/f8-project-05/',

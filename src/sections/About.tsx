@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
@@ -27,16 +28,19 @@ export default function About({ data }: { data: any }) {
       'Compiling aboutMe.ts...',
       'Running developer.code()...',
       '⚡ Online: 127.0.0.1:3000',
-      '🚀 "Hello, I\'m Trần Nguyễn Quốc Quý!"'
+      `🚀 "${data.greeting || "Hello, I'm Tran Nguyen Quoc Quy!"}"`
     ]
 
     logs.forEach((log, index) => {
-      setTimeout(() => {
-        setConsoleLogs(prev => [...prev, log])
-        if (index === logs.length - 1) {
-          setIsRunning(false)
-        }
-      }, (index + 1) * 500)
+      setTimeout(
+        () => {
+          setConsoleLogs((prev) => [...prev, log])
+          if (index === logs.length - 1) {
+            setIsRunning(false)
+          }
+        },
+        (index + 1) * 500
+      )
     })
   }
 
@@ -60,7 +64,7 @@ export default function About({ data }: { data: any }) {
           className="relative flex justify-center w-full"
         >
           <Quote className="absolute -top-6 left-0 w-20 h-20 text-primary/10 -rotate-12 pointer-events-none" />
-          
+
           <div className="w-full max-w-md h-[440px] rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl overflow-hidden flex flex-col relative group">
             {/* Header tab bar */}
             <div className="h-11 bg-slate-950/80 border-b border-slate-800/80 flex items-center justify-between px-4 flex-shrink-0 select-none">
@@ -69,7 +73,7 @@ export default function About({ data }: { data: any }) {
                 <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
                 <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
               </div>
-              
+
               <div className="flex items-center bg-slate-900 border-x border-t border-slate-800/60 px-4 py-1.5 rounded-t-lg text-xs font-semibold text-slate-400">
                 <TsIcon />
                 developer.ts
@@ -118,18 +122,27 @@ export default function About({ data }: { data: any }) {
                   <span className="text-cyan-400">developer</span> = {'{'}
                 </div>
                 <div className="pl-4">
-                  <span className="text-purple-400">name</span>: <span className="text-amber-300">'Quoc Quy'</span>,
+                  <span className="text-purple-400">name</span>:{' '}
+                  <span className="text-amber-300">&apos;Tran Nguyen Quoc Quy&apos;</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-purple-400">role</span>: <span className="text-amber-300">'Web Developer'</span>,
+                  <span className="text-purple-400">focus</span>:{' '}
+                  <span className="text-amber-300">&apos;React, Next.js & Node.js&apos;</span>,
                 </div>
                 <div className="pl-4">
-                  <span className="text-purple-400">passion</span>: <span className="text-amber-300">'UI/UX & Performance'</span>
+                  <span className="text-purple-400">building</span>:{' '}
+                  <span className="text-amber-300">&apos;Real-time & AI-powered Apps&apos;</span>,
+                </div>
+                <div className="pl-4">
+                  <span className="text-purple-400">interests</span>:{' '}
+                  <span className="text-amber-300">
+                    &apos;UI/UX, Performance & Scalability&apos;
+                  </span>
                 </div>
                 <div>{'}'};</div>
-                
+
                 <div className="h-3"></div>
-                
+
                 <div className="text-slate-500">{'// Ready for new challenges'}</div>
                 <div>
                   <span className="text-cyan-400">developer</span>.
@@ -144,9 +157,11 @@ export default function About({ data }: { data: any }) {
             </div>
 
             {/* Console output display */}
-            <div className={`absolute bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800/80 transition-all duration-500 overflow-hidden ${
-              consoleLogs.length > 0 ? 'h-[140px]' : 'h-0'
-            }`}>
+            <div
+              className={`absolute bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800/80 transition-all duration-500 overflow-hidden ${
+                consoleLogs.length > 0 ? 'h-[140px]' : 'h-0'
+              }`}
+            >
               <div className="flex items-center justify-between px-4 py-2 bg-slate-900 border-b border-slate-800/50 text-[11px] font-bold text-slate-500 select-none">
                 <div className="flex items-center gap-1.5">
                   <TerminalIcon className="w-3.5 h-3.5 text-primary animate-pulse" />
@@ -161,7 +176,11 @@ export default function About({ data }: { data: any }) {
               </div>
               <div className="p-4 font-mono text-[12px] text-left space-y-0.5 overflow-hidden h-[96px]">
                 {consoleLogs.map((log, idx) => {
-                  const isSuccess = log.includes('Success') || log.includes('Online') || log.includes('Hello') || log.includes('Trần')
+                  const isSuccess =
+                    log.includes('Success') ||
+                    log.includes('Online') ||
+                    log.includes('Hello') ||
+                    log.includes('Trần')
                   const colorClass = isSuccess ? 'text-emerald-400 font-semibold' : 'text-slate-400'
                   return (
                     <div key={idx} className={colorClass}>
@@ -201,7 +220,7 @@ export default function About({ data }: { data: any }) {
 
           <div className="space-y-4 mt-8">
             <h3 className="text-xl font-bold flex items-center gap-2 mb-4">
-              <GraduationCap className="text-primary" /> Education
+              <GraduationCap className="text-primary" /> {data.educationTitle || 'Education'}
             </h3>
             {data.education.map((edu: any, i: number) => (
               <MotionDiv

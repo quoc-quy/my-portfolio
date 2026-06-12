@@ -1,6 +1,6 @@
 import { fadeUp, stagger, zoomIn, floatContinuous } from '@/lib/animations'
 import { MotionDiv, MotionH1, MotionP } from '@/components/Motion'
-import { Code2, MonitorPlay, Rocket, Database, ChevronRight, Download } from 'lucide-react'
+import { Code2, MonitorPlay, Rocket, Database, ChevronRight, Download, Github, Linkedin } from 'lucide-react'
 import Image from 'next/image'
 
 const dataSatellites = [
@@ -75,20 +75,42 @@ export default function Hero({ data }: { data: any }) {
           >
             {data.summary}
           </MotionP>
-          <MotionDiv variants={fadeUp} className="flex flex-wrap gap-4">
+          <MotionDiv variants={fadeUp} className="flex flex-wrap items-center gap-4">
             <a
               href="/Tran-Nguyen-Quoc-Quy.pdf"
               download
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:-translate-y-1 hover:shadow-lg transition-all flex items-center gap-2"
+              className="bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:-translate-y-1 hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer"
             >
               {data.cta1} <Download size={20} />
             </a>
             <a
               href="#contact"
-              className="border-2 border-border bg-background/50 backdrop-blur-sm px-8 py-4 rounded-full font-bold hover:border-primary hover:text-primary hover:-translate-y-1 transition-all"
+              className="border-2 border-border bg-background/50 backdrop-blur-sm px-8 py-4 rounded-full font-bold hover:border-primary hover:text-primary hover:-translate-y-1 transition-all cursor-pointer"
             >
               {data.cta2}
             </a>
+
+            {/* Social Links with Glassmorphism */}
+            <div className="flex items-center gap-3">
+              <a
+                href={data.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-white/10 dark:bg-card/60 text-slate-700 dark:text-foreground hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground border border-slate-200 dark:border-border/80 rounded-full transition-all hover:-translate-y-1 flex items-center justify-center w-[52px] h-[52px] shadow-sm hover:shadow-lg cursor-pointer"
+                title="GitHub"
+              >
+                <Github size={20} />
+              </a>
+              <a
+                href={data.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-white/10 dark:bg-card/60 text-slate-700 dark:text-foreground hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground border border-slate-200 dark:border-border/80 rounded-full transition-all hover:-translate-y-1 flex items-center justify-center w-[52px] h-[52px] shadow-sm hover:shadow-lg cursor-pointer"
+                title="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
+            </div>
           </MotionDiv>
         </MotionDiv>
 

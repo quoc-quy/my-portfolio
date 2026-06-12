@@ -1,6 +1,6 @@
 import { portfolioData } from '@/data/portfolioData'
 import Navbar from '@/components/Navbar'
-import FloatingCV from '@/components/FloatingCV' // <--- Import component mới
+import FloatingCV from '@/components/FloatingCV'
 import Hero from '@/sections/Hero'
 import About from '@/sections/About'
 import Skills from '@/sections/Skills'
@@ -13,7 +13,7 @@ type Props = {
 
 export default async function Home(props: Props) {
   const searchParams = await props.searchParams
-  const lang = searchParams?.lang === 'en' ? 'en' : 'vi'
+  const lang = searchParams?.lang === 'vi' ? 'vi' : 'en'
   const data = portfolioData[lang]
 
   return (
@@ -21,13 +21,16 @@ export default async function Home(props: Props) {
       <Navbar lang={lang} navData={data.nav} />
 
       {/* Thêm nút Floating CV vào trang */}
-      <FloatingCV cvLabel={data.hero.viewCV} />
+      <FloatingCV
+        cvLabel={data.hero.viewCV}
+        downloadLabel={lang === 'vi' ? 'Tải xuống' : 'Download'}
+      />
 
       <Hero data={data.hero} />
       <About data={data.about} />
       <Skills data={data.skills} />
       <Projects data={data.projects} />
-      <Contact data={data.contact} />
+      <Contact data={data.contact} lang={lang} />
     </main>
   )
 }

@@ -87,6 +87,17 @@
     background-color: var(--background);
     color: var(--foreground);
   }
+  button,
+  a,
+  select,
+  [role="button"] {
+    cursor: pointer;
+  }
+  button:disabled,
+  a:not([href]),
+  [disabled] {
+    cursor: not-allowed;
+  }
 }
 
 @layer utilities {

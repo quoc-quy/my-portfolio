@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, X, Download } from 'lucide-react'
 
-export default function FloatingCV({ cvLabel }: { cvLabel: string }) {
+export default function FloatingCV({ cvLabel, downloadLabel = 'Tải xuống' }: { cvLabel: string; downloadLabel?: string }) {
   const [isOpen, setIsOpen] = useState(false)
 
   // Khóa cuộn trang nền khi mở Modal
@@ -23,7 +23,7 @@ export default function FloatingCV({ cvLabel }: { cvLabel: string }) {
       {/* Nút bấm Fixed góc dưới phải */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 px-5 py-3 md:px-6 md:py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-2xl hover:-translate-y-1 hover:scale-105 hover:shadow-[0_0_20px_var(--color-primary)] transition-all border border-primary-foreground/20"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 px-5 py-3 md:px-6 md:py-4 bg-primary text-primary-foreground font-bold rounded-full shadow-2xl hover:-translate-y-1 hover:scale-105 hover:shadow-[0_0_20px_var(--color-primary)] transition-all border border-primary-foreground/20 cursor-pointer"
       >
         <FileText className="w-5 h-5 md:w-6 md:h-6" />
         <span className="hidden md:inline text-base">{cvLabel}</span>
@@ -60,14 +60,14 @@ export default function FloatingCV({ cvLabel }: { cvLabel: string }) {
                   <a
                     href="/Tran-Nguyen-Quoc-Quy.pdf"
                     download
-                    className="p-2 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground rounded-full transition-colors flex items-center gap-2 px-4"
+                    className="p-2 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground rounded-full transition-colors flex items-center gap-2 px-4 cursor-pointer"
                   >
                     <Download className="w-5 h-5" />
-                    <span className="hidden md:inline text-sm font-bold">Tải xuống</span>
+                    <span className="hidden md:inline text-sm font-bold">{downloadLabel}</span>
                   </a>
                   <button
                     onClick={() => setIsOpen(false)}
-                    className="p-2 bg-muted text-muted-foreground hover:bg-destructive hover:text-destructive-foreground rounded-full transition-colors"
+                    className="p-2 bg-muted text-muted-foreground hover:bg-destructive hover:text-destructive-foreground rounded-full transition-colors cursor-pointer"
                   >
                     <X className="w-6 h-6" />
                   </button>
