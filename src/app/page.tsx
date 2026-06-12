@@ -1,6 +1,7 @@
 import { portfolioData } from '@/data/portfolioData'
 import Navbar from '@/components/Navbar'
 import FloatingCV from '@/components/FloatingCV'
+import Chatbot from '@/components/Chatbot'
 import Hero from '@/sections/Hero'
 import About from '@/sections/About'
 import Skills from '@/sections/Skills'
@@ -25,6 +26,9 @@ export default async function Home(props: Props) {
         cvLabel={data.hero.viewCV}
         downloadLabel={lang === 'vi' ? 'Tải xuống' : 'Download'}
       />
+
+      {/* AI Chatbot trợ lý tuyển dụng */}
+      <Chatbot lang={lang} />
 
       <Hero data={data.hero} />
       <About data={data.about} />
