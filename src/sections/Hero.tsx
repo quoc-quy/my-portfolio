@@ -123,7 +123,7 @@ export default function Hero({ data }: { data: any }) {
 
             {/* Talk to AI agent */}
             <a
-              href="#ai-assistant"
+              href="#contact"
               className="border border-violet-500/20 bg-violet-500/5 hover:bg-violet-500/10 text-violet-600 dark:text-violet-400 hover:text-violet-800 dark:hover:text-white px-6 py-3 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer select-none hover:-translate-y-0.5"
             >
               <span>{data.cta2}</span>

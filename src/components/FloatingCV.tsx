@@ -23,9 +23,9 @@ export default function FloatingCV({ cvLabel, downloadLabel = 'Download' }: { cv
       {/* Floating Action Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 px-5 py-3 md:px-6 md:py-4 bg-zinc-900 dark:bg-white text-zinc-100 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 font-medium rounded-full shadow-2xl hover:-translate-y-0.5 transition-all border border-zinc-800 dark:border-zinc-200 cursor-pointer backdrop-blur-sm select-none"
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 px-5 py-3 md:px-6 md:py-4 bg-white/80 dark:bg-zinc-900/80 hover:bg-white dark:hover:bg-zinc-800 text-violet-600 dark:text-violet-400 border border-violet-500/20 hover:border-violet-500/40 hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] font-semibold rounded-full shadow-2xl hover:-translate-y-0.5 transition-all cursor-pointer backdrop-blur-md select-none"
       >
-        <FileText className="w-4 h-4 md:w-5 md:h-5 text-zinc-400 dark:text-zinc-500" />
+        <FileText className="w-4 h-4 md:w-5 md:h-5 text-violet-600 dark:text-violet-400" />
         <span className="hidden md:inline text-sm tracking-tight">{cvLabel}</span>
       </button>
 
