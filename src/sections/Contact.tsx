@@ -1,196 +1,231 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { motion } from 'framer-motion'
-import { Mail, Phone, Github } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mail, Phone, Github, Linkedin, MapPin, CheckCircle, Send } from 'lucide-react'
 import { fadeUp, stagger } from '@/lib/animations'
+import { MotionDiv, MotionH2, MotionP } from '@/components/Motion'
 
 export default function Contact({ data, lang }: { data: any; lang: string }) {
   const isVi = lang === 'vi'
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
 
-  const labels = isVi
-    ? {
-        email: 'Email liên hệ',
-        emailAction: 'Gửi mail ngay',
-        phone: 'Số điện thoại',
-        phoneAction: 'Gọi trực tiếp',
-        github: 'Mã nguồn mở',
-        githubAction: 'Tới trang GitHub',
-        footerBio:
-          'Thực tập sinh Web Developer đam mê thiết kế UI/UX tinh tế, tối ưu hiệu suất và kiến trúc Web vững chắc.',
-        navAbout: 'Giới thiệu',
-        navSkills: 'Kỹ năng',
-        navProjects: 'Dự án',
-        navContact: 'Liên hệ',
-        copyright: 'Bản quyền © 2026 Trần Nguyễn Quốc Quý. Đã đăng ký bản quyền.'
-      }
-    : {
-        email: 'Email Address',
-        emailAction: 'Send mail now',
-        phone: 'Phone Number',
-        phoneAction: 'Call directly',
-        github: 'Open Source',
-        githubAction: 'Visit GitHub profile',
-        footerBio:
-          'Web Developer Intern passionate about crafting refined UI/UX, optimizing performance, and building clean code architectures.',
-        navAbout: 'About',
-        navSkills: 'Skills',
-        navProjects: 'Projects',
-        navContact: 'Contact',
-        copyright: 'Copyright © 2026 Tran Nguyen Quoc Quy. All rights reserved.'
-      }
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!name.trim() || !email.trim() || !message.trim()) return
+    // Simulate API submission
+    setFormSubmitted(true)
+    setName('')
+    setEmail('')
+    setMessage('')
+    setTimeout(() => setFormSubmitted(false), 5000)
+  }
+
+  const footerLinks = [
+    { id: 'about', label: isVi ? 'Giới thiệu' : 'About' },
+    { id: 'metrics', label: isVi ? 'Chỉ số' : 'Metrics' },
+    { id: 'projects', label: isVi ? 'Dự án' : 'Projects' },
+    { id: 'skills', label: isVi ? 'Kỹ năng' : 'Skills' },
+    { id: 'mindset', label: isVi ? 'Tư duy' : 'Mindset' },
+    { id: 'roadmap', label: isVi ? 'Lộ trình' : 'Roadmap' }
+  ]
 
   return (
-    <section
-      id="contact"
-      className="pt-32 pb-16 px-6 bg-slate-100 dark:bg-[#020408] border-t border-slate-200 dark:border-border/40 relative overflow-hidden flex flex-col items-center justify-center"
-    >
-      {/* Background Animated Blobs (Only visible on Dark Mode for subtle ambiance) */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none hidden dark:block" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px] pointer-events-none hidden dark:block" />
+    <section id="contact" className="pt-24 pb-16 px-6 bg-background border-t border-border relative overflow-hidden flex flex-col items-center">
+      {/* Background Dots */}
+      <div className="absolute inset-0 bg-dots-pattern opacity-40 pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto w-full relative z-10 text-center">
-        {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-6xl font-black mb-16 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 dark:from-foreground dark:to-muted-foreground select-none">
+      {/* Colorful ambiance glow blobs */}
+      <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto w-full relative z-10 space-y-16">
+        
+        {/* Section Header */}
+        <div className="text-left space-y-3 max-w-xl">
+          <MotionH2
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground"
+          >
             {data.title}
-          </h2>
-        </motion.div>
-
-        {/* Contact Cards Grid */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-24 max-w-5xl mx-auto w-full text-left"
-        >
-          {/* Card 1: Email */}
-          <motion.a
+          </MotionH2>
+          <MotionP
             variants={fadeUp}
-            whileHover={{ y: -8, scale: 1.02 }}
-            href={`mailto:${data.email}`}
-            className="group p-8 rounded-3xl bg-white dark:bg-card border border-slate-200 dark:border-border/60 hover:border-orange-500/30 dark:hover:border-orange-500/30 backdrop-blur-md transition-all duration-500 flex flex-col items-center text-center shadow-sm hover:shadow-[0_0_40px_rgba(249,115,22,0.06)] relative overflow-hidden"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="text-sm text-muted-foreground leading-relaxed font-sans"
           >
-            <div className="absolute -right-6 -top-6 w-20 h-20 bg-orange-500/5 rounded-full blur-xl group-hover:bg-orange-500/10 transition-all pointer-events-none"></div>
-            <div className="mb-6 p-4.5 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-400 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 flex items-center justify-center">
-              <Mail className="w-7 h-7" />
-            </div>
-            <span className="text-xs font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-widest mb-1.5">
-              {labels.email}
-            </span>
-            <span className="text-lg font-bold text-slate-900 dark:text-foreground mb-4 break-all">
-              {data.email}
-            </span>
-            <span className="text-sm font-bold text-primary flex items-center gap-1.5 mt-auto">
-              {labels.emailAction} →
-            </span>
-          </motion.a>
+            {data.subtitle}
+          </MotionP>
+        </div>
 
-          {/* Card 2: Phone */}
-          <motion.a
-            variants={fadeUp}
-            whileHover={{ y: -8, scale: 1.02 }}
-            href={`tel:${data.phone.replace(/ /g, '')}`}
-            className="group p-8 rounded-3xl bg-white dark:bg-card border border-slate-200 dark:border-border/60 hover:border-cyan-500/30 dark:hover:border-cyan-500/30 backdrop-blur-md transition-all duration-500 flex flex-col items-center text-center shadow-sm hover:shadow-[0_0_40px_rgba(6,182,212,0.06)] relative overflow-hidden"
-          >
-            <div className="absolute -right-6 -top-6 w-20 h-20 bg-cyan-500/5 rounded-full blur-xl group-hover:bg-cyan-500/10 transition-all pointer-events-none"></div>
-            <div className="mb-6 p-4.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 flex items-center justify-center">
-              <Phone className="w-7 h-7" />
-            </div>
-            <span className="text-xs font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-widest mb-1.5">
-              {labels.phone}
-            </span>
-            <span className="text-lg font-bold text-slate-900 dark:text-foreground mb-4">
-              {data.phone}
-            </span>
-            <span className="text-sm font-bold text-primary flex items-center gap-1.5 mt-auto">
-              {labels.phoneAction} →
-            </span>
-          </motion.a>
+        {/* Split Grid Details / Form */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Left Block: Info Cards (Vibrant accents restored) */}
+          <div className="md:col-span-5 flex flex-col justify-between p-8 bg-card border border-border rounded-2xl relative overflow-hidden text-left shadow-sm">
+            <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
+            
+            <div className="space-y-6 relative z-10">
+              <span className="text-[10px] font-mono tracking-widest text-zinc-550 dark:text-zinc-500 font-extrabold uppercase">
+                {isVi ? 'THÔNG TIN KẾT NỐI' : 'CONNECT CHANNELS'}
+              </span>
 
-          {/* Card 3: GitHub */}
-          <motion.a
-            variants={fadeUp}
-            whileHover={{ y: -8, scale: 1.02 }}
-            href={data.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group p-8 rounded-3xl bg-white dark:bg-card border border-slate-200 dark:border-border/60 hover:border-purple-500/30 dark:hover:border-purple-500/30 backdrop-blur-md transition-all duration-500 flex flex-col items-center text-center shadow-sm hover:shadow-[0_0_40px_rgba(168,85,247,0.06)] relative overflow-hidden"
-          >
-            <div className="absolute -right-6 -top-6 w-20 h-20 bg-purple-500/5 rounded-full blur-xl group-hover:bg-purple-500/10 transition-all pointer-events-none"></div>
-            <div className="mb-6 p-4.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 flex items-center justify-center">
-              <Github className="w-7 h-7" />
-            </div>
-            <span className="text-xs font-bold text-slate-500 dark:text-muted-foreground uppercase tracking-widest mb-1.5">
-              {labels.github}
-            </span>
-            <span className="text-lg font-bold text-slate-900 dark:text-foreground mb-4">
-              github.com/quoc-quy
-            </span>
-            <span className="text-sm font-bold text-primary flex items-center gap-1.5 mt-auto">
-              {labels.githubAction} →
-            </span>
-          </motion.a>
-        </motion.div>
+              {/* Direct Info list items */}
+              <div className="space-y-4 select-text">
+                {/* Email (Orange Accent) */}
+                <a
+                  href={`mailto:${data.email}`}
+                  className="flex items-center gap-3.5 p-3 rounded-lg border border-orange-500/20 bg-orange-500/5 text-orange-600 dark:text-orange-400 hover:bg-orange-500/10 hover:border-orange-500/35 transition-all text-xs font-bold shadow-sm"
+                >
+                  <Mail className="w-4 h-4 text-orange-650 dark:text-orange-400 flex-shrink-0" />
+                  <span>{data.email}</span>
+                </a>
 
-        {/* Footer Branding & Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-left border-t border-slate-200 dark:border-border/30 pt-16 pb-8 max-w-5xl mx-auto w-full flex-shrink-0">
-          <div className="space-y-4">
-            <div className="text-2xl font-black text-slate-900 dark:text-foreground tracking-wider flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-primary" />
-              Trần Nguyễn Quốc Quý
+                {/* Phone (Cyan Accent) */}
+                <a
+                  href={`tel:${data.phone.replace(/ /g, '')}`}
+                  className="flex items-center gap-3.5 p-3 rounded-lg border border-cyan-500/20 bg-cyan-500/5 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 hover:border-cyan-500/35 transition-all text-xs font-bold shadow-sm"
+                >
+                  <Phone className="w-4 h-4 text-cyan-650 dark:text-cyan-400 flex-shrink-0" />
+                  <span>{data.phone}</span>
+                </a>
+
+                {/* Location (Slate Accent) */}
+                <div className="flex items-center gap-3.5 p-3 rounded-lg border border-border bg-secondary/50 dark:bg-zinc-950/40 text-muted-foreground dark:text-zinc-300 text-xs font-semibold select-none">
+                  <MapPin className="w-4 h-4 text-zinc-500 flex-shrink-0" />
+                  <span>{data.location}</span>
+                </div>
+              </div>
             </div>
-            <p className="text-slate-600 dark:text-muted-foreground text-sm leading-relaxed max-w-sm">
-              {labels.footerBio}
-            </p>
-          </div>
-          <div className="flex flex-col md:items-end justify-center space-y-4">
-            <div className="flex gap-4">
+
+            {/* Social channels (Restored brand accent colors) */}
+            <div className="flex items-center gap-3 mt-8 pt-6 border-t border-border relative z-10 select-none">
               <a
                 href={data.github}
                 target="_blank"
-                rel="noreferrer"
-                className="p-3 bg-white dark:bg-card/60 text-slate-700 dark:text-foreground hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground border border-slate-200 dark:border-border/80 rounded-full transition-all hover:-translate-y-1 flex items-center justify-center"
-                title="GitHub"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-purple-500/5 border border-purple-500/20 hover:bg-purple-500/10 text-purple-650 dark:text-purple-400 hover:text-purple-800 dark:hover:text-white text-xs font-mono font-bold rounded-lg transition-all cursor-pointer shadow-sm"
               >
-                <Github className="w-5 h-5" />
+                <Github size={13} />
+                <span>GITHUB</span>
               </a>
               <a
-                href="https://www.linkedin.com/in/quocquy"
+                href={data.linkedin}
                 target="_blank"
-                rel="noreferrer"
-                className="p-3 bg-white dark:bg-card/60 text-slate-700 dark:text-foreground hover:bg-primary dark:hover:bg-primary hover:text-primary-foreground border border-slate-200 dark:border-border/80 rounded-full transition-all hover:-translate-y-1 flex items-center justify-center w-11 h-11"
-                title="LinkedIn"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-500/5 border border-blue-500/20 hover:bg-blue-500/10 text-blue-650 dark:text-blue-400 hover:text-blue-800 dark:hover:text-white text-xs font-mono font-bold rounded-lg transition-all cursor-pointer shadow-sm"
               >
-                <span className="font-black text-sm leading-none select-none">in</span>
+                <Linkedin size={13} />
+                <span>LINKEDIN</span>
               </a>
             </div>
           </div>
+
+          {/* Right Block: Message Form */}
+          <div className="md:col-span-7 p-8 bg-card border border-border rounded-2xl relative overflow-hidden shadow-sm">
+            <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
+
+            <AnimatePresence mode="wait">
+              {!formSubmitted ? (
+                <motion.form
+                  key="contact-form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onSubmit={handleFormSubmit}
+                  className="space-y-4 text-left relative z-10"
+                >
+                  <span className="text-[10px] font-mono tracking-widest text-zinc-500 font-extrabold uppercase block mb-2 select-none">
+                    {data.formTitle}
+                  </span>
+
+                  {/* Name field */}
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 font-sans uppercase">
+                      {data.formName}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full px-3 py-2.5 bg-background border border-border focus:border-primary/45 rounded-lg text-xs focus:outline-none transition-all text-foreground placeholder:text-zinc-405"
+                    />
+                  </div>
+
+                  {/* Email field */}
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 font-sans uppercase">
+                      {data.formEmail}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-3 py-2.5 bg-background border border-border focus:border-primary/45 rounded-lg text-xs focus:outline-none transition-all text-foreground placeholder:text-zinc-405"
+                    />
+                  </div>
+
+                  {/* Message field */}
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 font-sans uppercase">
+                      {data.formMessage}
+                    </label>
+                    <textarea
+                      rows={4}
+                      required
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="w-full px-3 py-2.5 bg-background border border-border focus:border-primary/45 rounded-lg text-xs focus:outline-none transition-all text-foreground placeholder:text-zinc-450 resize-none"
+                    />
+                  </div>
+
+                  {/* Submit button */}
+                  <button
+                    type="submit"
+                    className="w-full mt-4 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white hover:shadow-[0_0_20px_rgba(124,58,237,0.3)] py-3 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-2 select-none hover:-translate-y-0.5"
+                  >
+                    <span>{data.formSubmit}</span>
+                    <Send size={12} />
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="form-success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="h-full min-h-[300px] flex flex-col items-center justify-center text-center space-y-4 py-8 relative z-10"
+                >
+                  <CheckCircle className="w-12 h-12 text-primary animate-pulse" />
+                  <div className="space-y-1.5">
+                    <h4 className="text-sm font-bold text-foreground uppercase tracking-wider">
+                      {isVi ? 'GỬI THÀNH CÔNG!' : 'MESSAGE SENT!'}
+                    </h4>
+                    <p className="text-xs text-muted-foreground max-w-xs leading-relaxed font-sans font-medium">
+                      {data.formSuccess}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
         </div>
 
-        {/* Footer Bottom Bar */}
-        <div className="pt-8 mt-4 border-t border-slate-200 dark:border-border/20 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500 dark:text-muted-foreground max-w-5xl mx-auto w-full flex-shrink-0">
-          <p className="text-center md:text-left">{labels.copyright}</p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center font-bold text-slate-700 dark:text-foreground/80">
-            <a href="#about" className="hover:text-primary transition-colors">
-              {labels.navAbout}
-            </a>
-            <a href="#skills" className="hover:text-primary transition-colors">
-              {labels.navSkills}
-            </a>
-            <a href="#projects" className="hover:text-primary transition-colors">
-              {labels.navProjects}
-            </a>
-            <a href="#contact" className="hover:text-primary transition-colors">
-              {labels.navContact}
-            </a>
-          </div>
+        {/* Footer copyright only */}
+        <div className="border-t border-border pt-12 flex justify-center items-center text-xs text-muted-foreground select-none text-center w-full">
+          <span>Copyright © 2026 Tran Nguyen Quoc Quy.</span>
         </div>
+
       </div>
     </section>
   )

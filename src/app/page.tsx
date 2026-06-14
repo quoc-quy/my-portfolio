@@ -3,9 +3,12 @@ import Navbar from '@/components/Navbar'
 import FloatingCV from '@/components/FloatingCV'
 import Chatbot from '@/components/Chatbot'
 import Hero from '@/sections/Hero'
-import About from '@/sections/About'
-import Skills from '@/sections/Skills'
+import Metrics from '@/sections/Metrics'
 import Projects from '@/sections/Projects'
+import Skills from '@/sections/Skills'
+import Mindset from '@/sections/Mindset'
+import Roadmap from '@/sections/Roadmap'
+import AISection from '@/sections/AISection'
 import Contact from '@/sections/Contact'
 
 type Props = {
@@ -18,22 +21,34 @@ export default async function Home(props: Props) {
   const data = portfolioData[lang]
 
   return (
-    <main className="min-h-screen selection:bg-primary selection:text-primary-foreground">
+    <main className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground antialiased overflow-x-hidden">
+      {/* Sleek Floating Navbar */}
       <Navbar lang={lang} navData={data.nav} />
 
-      {/* Thêm nút Floating CV vào trang */}
+      {/* Floating CV capsule Trigger */}
       <FloatingCV
         cvLabel={data.hero.viewCV}
-        downloadLabel={lang === 'vi' ? 'Tải xuống' : 'Download'}
+        downloadLabel={lang === 'vi' ? 'Tải xuống CV' : 'Download CV'}
       />
 
-      {/* AI Chatbot trợ lý tuyển dụng */}
+      {/* Chatbot overlay recruiter widget */}
       <Chatbot lang={lang} />
 
+      {/* Core Portfolio Sections */}
       <Hero data={data.hero} />
-      <About data={data.about} />
+      
+      <Metrics data={data.metrics} />
+      
+      <Projects data={data.projects} lang={lang} />
+      
       <Skills data={data.skills} />
-      <Projects data={data.projects} />
+      
+      <Mindset data={data.mindset} />
+      
+      <Roadmap data={data.roadmap} />
+      
+      <AISection data={data.aiAssistant} lang={lang} />
+      
       <Contact data={data.contact} lang={lang} />
     </main>
   )

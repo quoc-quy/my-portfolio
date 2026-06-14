@@ -18,10 +18,9 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150
+      const scrollPosition = window.scrollY + 200
       for (const item of navData) {
         const element = document.getElementById(item.id)
         if (element) {
@@ -46,66 +45,81 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 bg-background/80 backdrop-blur-md px-3 md:px-4 py-2 rounded-full border border-border shadow-md flex items-center justify-between gap-2 transition-all w-[92vw] md:w-auto"
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 bg-zinc-950/80 backdrop-blur-md px-3 md:px-4 py-1.5 rounded-full border border-white/10 shadow-xl flex items-center justify-between gap-4 transition-all w-[92vw] md:w-auto select-none"
     >
+      {/* Mobile Menu Trigger */}
       <button
-        className="md:hidden p-2 text-foreground hover:bg-muted rounded-full transition-colors cursor-pointer"
+        className="md:hidden p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-full transition-all cursor-pointer"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        title="Toggle Menu"
       >
-        {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
       </button>
 
-      <div className="hidden md:flex items-center gap-1">
-        {navData.map((item) => (
-          <a
-            key={item.id}
-            href={`#${item.id}`}
-            className={`relative px-4 py-2 rounded-full text-sm font-semibold transition-colors ${activeSection === item.id ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}
-          >
-            {activeSection === item.id && (
-              <motion.div
-                layoutId="activeNav"
-                className="absolute inset-0 bg-primary rounded-full -z-10 shadow-[0_0_10px_var(--color-primary)]"
-              />
-            )}
-            {item.label}
-          </a>
-        ))}
+      {/* Desktop Menu links */}
+      <div className="hidden md:flex items-center gap-1.5">
+        {navData.map((item) => {
+          const isActive = activeSection === item.id
+          return (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={`relative px-3 py-1.5 rounded-full text-xs font-medium tracking-wide whitespace-nowrap transition-colors ${
+                isActive ? 'text-white' : 'text-zinc-400 hover:text-zinc-200'
+              }`}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="activeNav"
+                  className="absolute inset-0 bg-white/10 rounded-full -z-10 border border-white/5"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                />
+              )}
+              {item.label}
+            </a>
+          )
+        })}
       </div>
 
-      <div className="hidden md:block w-px h-6 bg-border mx-1"></div>
+      <div className="hidden md:block w-px h-4 bg-white/10 mx-0.5"></div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1.5">
+        {/* Language selector Dropdown */}
         <div className="relative">
           <button
             onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-muted text-sm font-bold transition-colors cursor-pointer"
+            className="flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-white/5 text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-all cursor-pointer border border-transparent hover:border-white/5"
           >
-            <Globe className="w-4 h-4" />
-            <span className="hidden sm:inline">{lang.toUpperCase()}</span>
-            <ChevronDown className="w-3 h-3" />
+            <Globe className="w-3.5 h-3.5 text-zinc-500" />
+            <span>{lang.toUpperCase()}</span>
+            <ChevronDown className="w-3 h-3 text-zinc-500" />
           </button>
           <AnimatePresence>
             {isLangOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                className="absolute top-full mt-2 right-0 md:left-1/2 md:-translate-x-1/2 bg-popover border border-border rounded-xl shadow-lg flex flex-col min-w-[120px] overflow-hidden"
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                className="absolute top-full mt-2 right-0 bg-zinc-900 border border-white/10 rounded-xl shadow-2xl flex flex-col min-w-[120px] overflow-hidden p-1 z-50"
               >
                 <Link
                   href={getLangUrl('vi')}
                   onClick={() => setIsLangOpen(false)}
-                  className="px-4 py-3 md:py-2 text-left hover:bg-muted text-sm font-medium"
+                  className={`px-3 py-2 text-left rounded-lg text-xs font-medium hover:bg-white/5 transition-colors ${
+                    lang === 'vi' ? 'text-white bg-white/5' : 'text-zinc-400'
+                  }`}
                 >
                   Tiếng Việt
                 </Link>
                 <Link
                   href={getLangUrl('en')}
                   onClick={() => setIsLangOpen(false)}
-                  className="px-4 py-3 md:py-2 text-left hover:bg-muted text-sm font-medium"
+                  className={`px-3 py-2 text-left rounded-lg text-xs font-medium hover:bg-white/5 transition-colors ${
+                    lang === 'en' ? 'text-white bg-white/5' : 'text-zinc-400'
+                  }`}
                 >
                   English
                 </Link>
@@ -114,36 +128,44 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
           </AnimatePresence>
         </div>
 
+        {/* Theme Toggle Button */}
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="p-2 rounded-full hover:bg-muted transition-colors text-foreground cursor-pointer"
+          className="p-2 text-zinc-400 hover:text-zinc-200 hover:bg-white/5 rounded-full transition-all cursor-pointer border border-transparent hover:border-white/5"
+          title="Toggle Theme"
         >
           {theme === 'dark' ? (
-            <Sun className="w-4 h-4 text-yellow-400" />
+            <Sun className="w-3.5 h-3.5 text-zinc-400" />
           ) : (
-            <Moon className="w-4 h-4" />
+            <Moon className="w-3.5 h-3.5 text-zinc-400" />
           )}
         </button>
       </div>
 
+      {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -15, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -15, scale: 0.95 }}
-            className="absolute top-full left-0 mt-3 w-full bg-card/95 backdrop-blur-xl border border-border rounded-3xl shadow-2xl flex flex-col p-3 md:hidden overflow-hidden z-50 gap-1"
+            className="absolute top-full left-0 mt-3 w-full bg-zinc-950/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl flex flex-col p-2 md:hidden overflow-hidden z-50 gap-0.5"
           >
-            {navData.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`relative w-full text-left px-5 py-4 rounded-2xl text-base font-bold transition-all ${activeSection === item.id ? 'text-primary-foreground bg-primary shadow-md' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
-              >
-                {item.label}
-              </a>
-            ))}
+            {navData.map((item) => {
+              const isActive = activeSection === item.id
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                    isActive ? 'text-white bg-white/10 border border-white/5' : 'text-zinc-400 hover:bg-white/5 hover:text-zinc-200'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              )
+            })}
           </motion.div>
         )}
       </AnimatePresence>

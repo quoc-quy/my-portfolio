@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       )
     }
 
-    // Dynamically retrieve context from live portfolioData
+    // Dynamically retrieve context from live portfolioData matching new schemas
     const contextText = `
       Here is the structured data of Trần Nguyễn Quốc Quý's portfolio:
       
@@ -38,38 +38,36 @@ export async function POST(req: Request) {
       - Name: ${portfolioData.vi.hero.name1} ${portfolioData.vi.hero.name2}
       - Role: ${portfolioData.vi.hero.role}
       - About: ${portfolioData.vi.about.description}
-      - Goal: ${portfolioData.vi.about.professionalSummary}
       - Education: ${portfolioData.vi.about.education.map((e) => `${e.time}: ${e.title} at ${e.desc}`).join(', ')}
-      - Skills (Frontend): ${portfolioData.vi.skills.hardSkills[0].desc}
-      - Skills (Backend & APIs): ${portfolioData.vi.skills.hardSkills[1].desc}
-      - Skills (State & Data): ${portfolioData.vi.skills.hardSkills[2].desc}
-      - Skills (Cloud & Infrastructure): ${portfolioData.vi.skills.hardSkills[3].desc}
-      - Soft Skills: ${portfolioData.vi.skills.softSkills.join(', ')}
-      - Tools: ${portfolioData.vi.skills.tools.join(', ')}
-      - Projects:
-        ${portfolioData.vi.projects.items.map((p) => `- Title: ${p.title}\n  Description: ${p.desc}\n  Stack: ${p.stack.join(', ')}\n  GitHub: ${p.github}\n  Demo: ${p.demo}`).join('\n')}
-      - Contact info: Email: ${portfolioData.vi.contact.email}, Phone: ${portfolioData.vi.contact.phone}, GitHub: ${portfolioData.vi.contact.github}
+      - Skills:
+        ${portfolioData.vi.skills.categories.map((c) => `- ${c.name}: ${c.items.join(', ')}`).join('\n')}
+      - Mindset:
+        ${portfolioData.vi.mindset.items.map((m) => `- ${m.title}: ${m.desc}`).join('\n')}
+      - Learning Roadmap:
+        ${portfolioData.vi.roadmap.learning.map((l) => `- ${l.name} (${l.status}, ${l.progress}%)`).join('\n')}
+      - Projects (Featured Systems & Labs):
+        ${portfolioData.vi.projects.items.map((p) => `- Title: ${p.title} (${p.tagline || 'Lab'})\n  Description: ${p.desc}\n  Stack: ${p.stack.join(', ')}\n  Problem: ${p.caseStudy?.problem || 'N/A'}\n  Solution: ${p.caseStudy?.solution || 'N/A'}\n  Challenges: ${p.caseStudy?.challenges.map((c: any) => c.title + ': ' + c.desc).join('; ') || 'N/A'}\n  Results: ${p.caseStudy?.results || 'N/A'}\n  GitHub: ${p.github}\n  Demo: ${p.demo}`).join('\n')}
+      - Contact info: Email: ${portfolioData.vi.contact.email}, Phone: ${portfolioData.vi.contact.phone}, GitHub: ${portfolioData.vi.contact.github}, LinkedIn: ${portfolioData.vi.contact.linkedin}
 
       ENGLISH PROFILE:
       - Name: ${portfolioData.en.hero.name1} ${portfolioData.en.hero.name2}
       - Role: ${portfolioData.en.hero.role}
       - About: ${portfolioData.en.about.description}
-      - Goal: ${portfolioData.en.about.professionalSummary}
       - Education: ${portfolioData.en.about.education.map((e) => `${e.time}: ${e.title} at ${e.desc}`).join(', ')}
-      - Skills (Frontend): ${portfolioData.en.skills.hardSkills[0].desc}
-      - Skills (Backend & APIs): ${portfolioData.en.skills.hardSkills[1].desc}
-      - Skills (State & Data): ${portfolioData.en.skills.hardSkills[2].desc}
-      - Skills (Cloud & Infrastructure): ${portfolioData.en.skills.hardSkills[3].desc}
-      - Soft Skills: ${portfolioData.en.skills.softSkills.join(', ')}
-      - Tools: ${portfolioData.en.skills.tools.join(', ')}
-      - Projects:
-        ${portfolioData.en.projects.items.map((p) => `- Title: ${p.title}\n  Description: ${p.desc}\n  Stack: ${p.stack.join(', ')}\n  GitHub: ${p.github}\n  Demo: ${p.demo}`).join('\n')}
-      - Contact info: Email: ${portfolioData.en.contact.email}, Phone: ${portfolioData.en.contact.phone}, GitHub: ${portfolioData.en.contact.github}
+      - Skills:
+        ${portfolioData.en.skills.categories.map((c) => `- ${c.name}: ${c.items.join(', ')}`).join('\n')}
+      - Mindset:
+        ${portfolioData.en.mindset.items.map((m) => `- ${m.title}: ${m.desc}`).join('\n')}
+      - Learning Roadmap:
+        ${portfolioData.en.roadmap.learning.map((l) => `- ${l.name} (${l.status}, ${l.progress}%)`).join('\n')}
+      - Projects (Featured Systems & Labs):
+        ${portfolioData.en.projects.items.map((p) => `- Title: ${p.title} (${p.tagline || 'Lab'})\n  Description: ${p.desc}\n  Stack: ${p.stack.join(', ')}\n  Problem: ${p.caseStudy?.problem || 'N/A'}\n  Solution: ${p.caseStudy?.solution || 'N/A'}\n  Challenges: ${p.caseStudy?.challenges.map((c: any) => c.title + ': ' + c.desc).join('; ') || 'N/A'}\n  Results: ${p.caseStudy?.results || 'N/A'}\n  GitHub: ${p.github}\n  Demo: ${p.demo}`).join('\n')}
+      - Contact info: Email: ${portfolioData.en.contact.email}, Phone: ${portfolioData.en.contact.phone}, GitHub: ${portfolioData.en.contact.github}, LinkedIn: ${portfolioData.en.contact.linkedin}
     `
 
     const systemPrompt = `
-      You are Quoc Quy's Personal AI Assistant.
-      Your purpose is to answer HR recruiters' questions about Quoc Quy politely, professionally, and helpfully.
+      You are Quoc Quy's Personal AI Recruiter Assistant.
+      Your purpose is to answer HR recruiters' and engineering managers' questions about Quoc Quy politely, professionally, and with a strong focus on technical depth and product mindset.
       
       RULES:
       1. Answer in the same language as the user's query (either Vietnamese or English).

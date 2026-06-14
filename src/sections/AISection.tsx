@@ -2,7 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useChat, UIMessage } from '@ai-sdk/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Bot, User, Sparkles, RefreshCw, X, Send } from 'lucide-react'
+import { fadeUp, stagger } from '@/lib/animations'
+import { MotionDiv, MotionH2, MotionP } from '@/components/Motion'
+import { Bot, User, Sparkles, RefreshCw, Send, Terminal } from 'lucide-react'
 
 // Inline formatter for Markdown symbols like **bold**, `code`, and [link](url)
 const parseInlineFormatting = (text: string): React.ReactNode => {
@@ -122,25 +124,20 @@ const formatMessageContent = (text: string): React.ReactNode => {
   })
 }
 
-export default function Chatbot({ lang }: { lang: string }) {
+export default function AISection({ data, lang }: { data: any; lang: string }) {
   const isVi = lang === 'vi'
-  const [isOpen, setIsOpen] = useState(false)
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const [input, setInput] = useState('')
-
-  const welcomeMessage = isVi
-    ? 'Xin chào! Tôi là trợ lý ảo tuyển dụng của Trần Nguyễn Quốc Quý. Bạn có thể hỏi tôi về các kỹ năng kỹ thuật, kinh nghiệm, thông tin dự án hoặc lý do vì sao nên tuyển dụng Quý nhé!'
-    : "Hello! I am Quoc Quy's AI recruiter assistant. Feel free to ask me anything about his technical skills, work experience, projects, or why you should hire him!"
 
   const { messages, sendMessage, status, setMessages } = useChat({
     messages: [
       {
-        id: 'welcome',
+        id: 'sec-welcome',
         role: 'assistant',
         parts: [
           {
             type: 'text',
-            text: welcomeMessage,
+            text: data.welcome,
             state: 'done'
           }
         ]
@@ -150,17 +147,13 @@ export default function Chatbot({ lang }: { lang: string }) {
 
   const isLoading = status === 'submitted' || status === 'streaming'
 
-  const suggestions = isVi
-    ? [
-        { label: 'Giới thiệu về Quý', query: 'Hãy giới thiệu về Quốc Quý' },
-        { label: 'Dự án ChatPulse', query: 'Hãy giới thiệu dự án ChatPulse và kiến trúc' },
-        { label: 'Tại sao nên tuyển Quy?', query: 'Tại sao nên tuyển dụng Quốc Quý?' }
-      ]
-    : [
-        { label: 'Tell me about Quy', query: 'Tell me about Quoc Quy' },
-        { label: 'ChatPulse Architecture', query: 'Tell me about the ChatPulse architecture' },
-        { label: 'Why hire Quoc Quy?', query: 'Why should I hire Quoc Quy?' }
-      ]
+  const mockQuestions = [
+    { label: data.tellMe, query: isVi ? 'Hãy giới thiệu về Trần Nguyễn Quốc Quý' : 'Tell me about Tran Nguyen Quoc Quy' },
+    { label: data.explainChatPulse, query: isVi ? 'Giải thích dự án ChatPulse và kiến trúc kỹ thuật' : 'Explain ChatPulse and its system architecture' },
+    { label: data.explainTripBee, query: isVi ? 'Giải thích dự án TripBee và các cơ chế khoá phòng' : 'Explain TripBee and its concurrent lock solution' },
+    { label: data.techStack, query: isVi ? 'Quốc Quý sử dụng những công nghệ cốt lõi nào?' : 'What technologies does Quoc Quy specialize in?' },
+    { label: data.whyHire, query: isVi ? 'Tại sao nên tuyển dụng Quốc Quý làm Intern?' : 'Why should I hire Quoc Quy as a developer intern?' }
+  ]
 
   useEffect(() => {
     const container = chatContainerRef.current
@@ -196,12 +189,12 @@ export default function Chatbot({ lang }: { lang: string }) {
   const handleResetChat = () => {
     setMessages([
       {
-        id: 'welcome',
+        id: 'sec-welcome',
         role: 'assistant',
         parts: [
           {
             type: 'text',
-            text: welcomeMessage,
+            text: data.welcome,
             state: 'done'
           }
         ]
@@ -211,102 +204,93 @@ export default function Chatbot({ lang }: { lang: string }) {
   }
 
   return (
-    <div className="font-sans select-none">
-      {/* Floating Toggle Button */}
-      <div className="fixed bottom-22 right-6 md:bottom-28 md:right-8 z-40 flex items-center justify-end">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 sm:w-auto sm:h-12 px-0 sm:px-5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-full flex items-center justify-center gap-2 shadow-2xl hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all border border-white/20 cursor-pointer group relative backdrop-blur-sm"
-          title={isVi ? 'Trò chuyện với Trợ lý của Quý' : "Talk to Quy's Assistant"}
-        >
-          <AnimatePresence mode="wait">
-            {isOpen ? (
-              <motion.div
-                key="close"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="flex items-center gap-1"
-              >
-                <X size={16} />
-                <span className="hidden sm:inline text-xs font-semibold">{isVi ? 'Đóng' : 'Close'}</span>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="chat"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="flex items-center gap-2"
-              >
-                <Bot size={16} className="text-white group-hover:rotate-12 transition-transform duration-300" />
-                <span className="hidden sm:inline text-xs font-semibold">Quy&apos;s Assistant</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </button>
-      </div>
+    <section id="ai-assistant" className="py-24 px-6 relative bg-background overflow-hidden border-t border-border">
+      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
-      {/* Slide-Up Chat Panel */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 45, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            className="fixed bottom-4 left-4 right-4 sm:bottom-24 sm:right-8 sm:left-auto w-auto sm:w-[420px] md:w-[450px] h-[80vh] max-h-[550px] min-h-[380px] bg-card border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden z-50 transition-all duration-300"
-          >
-            {/* Header */}
-            <div className="p-4 bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 border-b border-border flex items-center justify-between flex-shrink-0 select-none relative text-white shadow-md">
-              <div className="absolute inset-0 bg-dots-pattern opacity-10 pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        {/* Left column: Explanations & Suggestions */}
+        <div className="lg:col-span-5 text-left space-y-6">
+          <div className="space-y-3">
+            <MotionH2
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground flex items-center gap-3"
+            >
+              <Bot className="w-8 h-8 text-primary animate-pulse" />
+              {data.title}
+            </MotionH2>
+            <MotionP
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              className="text-sm text-muted-foreground leading-relaxed font-sans"
+            >
+              {data.description}
+            </MotionP>
+          </div>
 
-              <div className="flex items-center gap-3 relative z-10">
-                <div className="p-2 bg-white/10 border border-white/10 rounded-xl flex items-center justify-center relative">
-                  <Bot size={18} className="text-white animate-pulse" />
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-zinc-900" />
-                </div>
-                <div className="flex flex-col text-left">
-                  <span className="font-bold text-sm text-white leading-none">
-                    Quy&apos;s AI Recruiter
-                  </span>
-                  <span className="text-[9px] text-white/80 font-mono uppercase mt-1 flex items-center gap-1 font-bold">
-                    <Sparkles size={8} className="text-yellow-300" />
-                    ONLINE 24/7
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1.5 relative z-10 text-white">
+          {/* Quick Suggestion Prompts List */}
+          <div className="space-y-3 pt-2">
+            <span className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase font-bold">
+              {isVi ? 'ĐỀ XUẤT CÂU HỎI TRỰC QUAN' : 'SELECT A MOCK INQUIRY'}
+            </span>
+            <div className="flex flex-col gap-2 select-none font-sans">
+              {mockQuestions.map((q, i) => (
                 <button
-                  onClick={handleResetChat}
-                  className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all cursor-pointer text-white/80 hover:text-white"
-                  title={isVi ? 'Đặt lại' : 'Reset'}
+                  key={i}
+                  onClick={() => handleSuggestionClick(q.query)}
+                  className="w-full text-left px-4 py-2.5 rounded-lg border border-violet-500/20 bg-violet-500/5 hover:bg-violet-500/10 text-xs font-bold text-violet-600 dark:text-violet-400 hover:text-violet-800 dark:hover:text-white transition-all cursor-pointer flex items-center justify-between group shadow-sm hover:shadow-[0_0_15px_rgba(168,85,247,0.1)]"
                 >
-                  <RefreshCw size={13} />
+                  <span className="truncate pr-4">{q.label}</span>
+                  <span className="font-mono text-violet-600 group-hover:text-violet-500 text-[10px] transition-colors flex-shrink-0">
+                    {isVi ? 'Hỏi trợ lý →' : 'Ask →'}
+                  </span>
                 </button>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-all cursor-pointer text-white/80 hover:text-white"
-                >
-                  <X size={14} />
-                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Right column: Interactive embedded sandbox window */}
+        <div className="lg:col-span-7">
+          <div className="w-full h-[480px] bg-card border border-border rounded-2xl flex flex-col overflow-hidden shadow-2xl relative glow-purple">
+            <div className="absolute inset-0 bg-dots-pattern opacity-10 pointer-events-none" />
+
+            {/* Window control bar (Gradient background matching previous version) */}
+            <div className="h-10 bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 border-b border-border flex items-center justify-between px-4 flex-shrink-0 select-none relative z-10 text-white shadow-md">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-red-500/80" />
+                <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
+                <span className="w-2 h-2 rounded-full bg-green-500/80" />
               </div>
+              <span className="text-[10px] font-mono text-white/80 flex items-center gap-1.5 font-bold">
+                <Terminal size={10} />
+                recruiter_agent.sh
+              </span>
+              <button
+                onClick={handleResetChat}
+                className="p-1 hover:bg-white/10 rounded transition-all cursor-pointer text-white/80 hover:text-white"
+                title={isVi ? 'Đặt lại cuộc trò chuyện' : 'Reset thread'}
+              >
+                <RefreshCw size={12} />
+              </button>
             </div>
 
-            {/* Conversation Messages Box */}
+            {/* Chat Messages scroll area */}
             <div 
               ref={chatContainerRef}
-              className="flex-grow p-4 overflow-y-auto space-y-4 text-left flex flex-col scrollbar-thin relative bg-background/50 dark:bg-zinc-950"
+              className="flex-grow p-4 md:p-6 overflow-y-auto space-y-4 text-left flex flex-col scrollbar-thin bg-background/30 dark:bg-zinc-950/80 relative z-10"
             >
-              <div className="absolute inset-0 bg-dots-pattern opacity-20 pointer-events-none" />
-
               {messages.map((msg) => {
                 const isUser = msg.role === 'user'
                 return (
                   <div
                     key={msg.id}
-                    className={`flex items-start gap-2.5 relative z-10 ${isUser ? 'justify-end' : 'justify-start'}`}
+                    className={`flex items-start gap-3 relative z-10 ${isUser ? 'justify-end' : 'justify-start'}`}
                   >
                     {!isUser && (
                       <div className="p-1.5 bg-secondary dark:bg-zinc-900 text-violet-600 dark:text-violet-400 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 border border-border dark:border-violet-500/15 shadow-xs">
@@ -315,10 +299,10 @@ export default function Chatbot({ lang }: { lang: string }) {
                     )}
 
                     <div
-                      className={`p-3.5 rounded-xl text-[13px] leading-relaxed max-w-[85%] border font-sans select-text shadow-xs ${
+                      className={`p-3.5 rounded-xl text-[13px] leading-relaxed max-w-[85%] border font-sans select-text ${
                         isUser
-                           ? 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white border-transparent rounded-tr-none font-medium shadow-md'
-                           : 'bg-card dark:bg-zinc-900 text-foreground/90 dark:text-zinc-300 border-border dark:border-white/5'
+                          ? 'bg-gradient-to-br from-violet-600 to-indigo-600 text-white border-transparent rounded-tr-none font-medium shadow-md'
+                          : 'bg-card dark:bg-zinc-900 text-foreground/90 dark:text-zinc-300 border-border dark:border-white/5 shadow-xs'
                       }`}
                     >
                       {msg.parts.map((part, partIdx) => {
@@ -342,9 +326,9 @@ export default function Chatbot({ lang }: { lang: string }) {
                 )
               })}
 
-              {/* Loader */}
+              {/* Typing indicator */}
               {status === 'submitted' && (
-                <div className="flex items-start gap-2.5 justify-start relative z-10">
+                <div className="flex items-start gap-3 justify-start relative z-10">
                   <div className="p-1.5 bg-secondary dark:bg-zinc-900 text-violet-600 dark:text-violet-400 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 border border-border dark:border-violet-500/15 shadow-xs">
                     <Bot size={13} />
                   </div>
@@ -357,42 +341,29 @@ export default function Chatbot({ lang }: { lang: string }) {
               )}
             </div>
 
-            {/* Suggestion Chips */}
-            <div className="px-4 py-2 border-t border-border bg-secondary/40 dark:bg-zinc-900/40 flex-shrink-0 flex items-center gap-2 overflow-x-auto scrollbar-none whitespace-nowrap select-none relative z-10">
-              <Sparkles size={11} className="text-violet-500 flex-shrink-0" />
-              {suggestions.map((s, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleSuggestionClick(s.query)}
-                  className="text-[10px] px-2.5 py-1 rounded-md border border-violet-500/20 bg-violet-500/5 hover:bg-violet-500/10 text-violet-605 hover:text-white transition-all cursor-pointer font-bold font-sans"
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Input Submission Bar */}
+            {/* Form Submission */}
             <form
               onSubmit={handleSubmit}
-              className="p-3 border-t border-border bg-secondary dark:bg-zinc-900 flex items-center gap-2 flex-shrink-0 relative z-10"
+              className="p-3 bg-secondary dark:bg-zinc-900 border-t border-border flex items-center gap-2 flex-shrink-0 relative z-10"
             >
               <input
                 value={input}
                 onChange={handleInputChange}
-                placeholder={isVi ? 'Hỏi về dự án, kỹ năng của Quý...' : 'Ask about Quy\'s projects, skills...'}
-                className="flex-grow px-3 py-2.5 bg-background border border-border focus:border-violet-500/30 focus:ring-1 focus:ring-violet-500/10 rounded-lg text-xs focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-650 text-foreground"
+                placeholder={data.placeholder}
+                className="flex-grow px-3 py-2.5 bg-background border border-border focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/10 rounded-lg text-xs focus:outline-none transition-all placeholder:text-zinc-500 dark:placeholder:text-zinc-650 text-foreground"
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
                 className="p-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:opacity-95 rounded-lg cursor-pointer disabled:opacity-40 transition-all flex items-center justify-center flex-shrink-0 w-9 h-9"
               >
-                <Send size={13} />
+                <Send size={12} />
               </button>
             </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
   )
 }
