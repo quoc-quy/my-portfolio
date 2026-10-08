@@ -1,3 +1,21 @@
 {
-  "cSpell.words": ["Anithing"]
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "One Dark Pro",
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.fontSize": 14,
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+
+  "prettier.printWidth": 85,
+  "prettier.singleAttributePerLine": true,
+
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showExpandedAbbreviation": "always",
+
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "*.jsx": "typescriptreact"
+  }
 }
