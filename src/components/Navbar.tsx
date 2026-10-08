@@ -208,7 +208,7 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
           </div>
 
           {/* Theme Toggle Button */}
-          <button
+          {/* <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className="p-2 text-muted-foreground hover:text-foreground hover:bg-primary/10 dark:hover:bg-cyan-500/10 rounded-lg transition-all cursor-pointer border border-transparent hover:border-border"
             title="Toggle Theme"
@@ -222,7 +222,7 @@ export default function Navbar({ lang, navData }: { lang: string; navData: any[]
             ) : (
               <Sun className="w-3.5 h-3.5 text-muted-foreground opacity-60" />
             )}
-          </button>
+          </button> */}
 
           {/* Featured Action Button (như nút Đăng nhập trong ảnh, chuyển sang phong cách Gradient Xanh) */}
           <a
